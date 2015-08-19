@@ -37,4 +37,20 @@ describe(Book) do
       expect(Book.find(test.book_id)).to(eq(test))
     end
   end
+
+  describe('#update') do
+    it("updates a books name that matches the id") do
+      test = Book.new({:title => 'The Captains Daughter', :author => 'Alexander Pushkin'})
+      test.save()
+      test.update({:author => 'A.S. Pushkin'})
+      expect(test.author()).to(eq('A.S. Pushkin'))
+    end
+    it("updates both title and author") do
+      test = Book.new({:title => 'The Captains Daughter', :author => 'Alexander Pushkin'})
+      test.save()
+      test.update({:title => 'Captains Daughter', :author => 'A.S. Pushkin'})
+      expect(test.author()).to(eq('A.S. Pushkin'))
+      expect(test.title()).to(eq('Captains Daughter'))
+    end
+  end
 end

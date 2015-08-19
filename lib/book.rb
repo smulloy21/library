@@ -44,4 +44,12 @@ class Book
       end
     end
   end
+
+  define_method(:update) do |attributes|
+    @title = attributes.fetch(:title, @title)
+    @author = attributes.fetch(:author, @author)
+    @id = self.book_id()
+    DB.exec("UPDATE books SET title = '#{@title}' WHERE patron_id = #{@id};")
+    DB.exec("UPDATE books SET author = '#{@author}' WHERE patron_id = #{@id};")
+  end
 end
