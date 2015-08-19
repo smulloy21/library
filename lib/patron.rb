@@ -9,7 +9,6 @@ class Patron
   define_singleton_method(:all) do
     result = DB.exec("SELECT * FROM patrons;")
     patrons = []
-
     result.each() do |patron|
       name = patron.fetch("patron_name")
       id = patron.fetch("patron_id")
@@ -18,6 +17,21 @@ class Patron
     patrons
   end
 
+  define_method(:==) do |other|
+    self.patron_id == other.patron_id
+  end
 
+  define_method(:save) do
+    result = DB.exec("INSERT INTO patrons (patron_name) VALUES ('#{@patron_name}') RETURNING patron_id;")
+    @patron_id = result.first().fetch('patron_id')
+    @patron_id.to_i()
+  end
 
+  define_singleton_method(:find) do |id|
+     Patron.all().each() do |patron|
+       if patron.patron_id() == id
+         return patron
+       end
+     end
+   end
 end
