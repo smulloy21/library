@@ -55,9 +55,21 @@ patch('/books/:id') do
   redirect('/books')
 end
 
+delete('/books/:id') do
+  @book = Book.find(params.fetch('id').to_i())
+  @book.delete()
+  redirect('/books')
+end
+
 patch('/patrons/:id') do
   patron = params.fetch('patron_name')
   @patron = Patron.find(params.fetch('id').to_i())
   @patron.update({:patron_name => patron})
+  redirect('/patrons')
+end
+
+delete('/patrons/:id') do
+  @patron = Patron.find(params.fetch('id').to_i())
+  @patron.delete()
   redirect('/patrons')
 end

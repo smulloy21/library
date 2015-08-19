@@ -13,3 +13,13 @@
   <button type="submit">Edit book</button>
 
 </form>
+
+<h3>Delete Book</h3>
+
+<form action="/books/<%= @book.book_id() %>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button type="submit">Delete</button>
+</form>
+
+<a href="/books">Back to list of books</a><br>
+<a href="/">Home</a>

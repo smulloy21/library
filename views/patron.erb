@@ -10,3 +10,13 @@
   <button type="submit">Update</button>
 
 </form>
+
+<h3>Delete Patron</h3>
+
+<form action="/patrons/<%= @patron.patron_id() %>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button type="submit">Delete</button>
+</form>
+
+<a href="/patrons">Back to list of patrons</a><br>
+<a href="/">Home</a>
