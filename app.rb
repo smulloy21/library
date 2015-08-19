@@ -48,10 +48,13 @@ get('/patrons/:id/edit') do
 end
 
 patch('/books/:id') do
-  title = params.fetch('title')
-  author = params.fetch('author')
   @book = Book.find(params.fetch('id').to_i())
-  @book.update({:title => title, :author => author})
+  if params.fetch('title').length > 0
+    @book.update({:title => params.fetch('title')})
+  end
+  if params.fetch('author').length > 0
+    @book.update({:author => params.fetch('author')})
+  end
   redirect('/books')
 end
 
