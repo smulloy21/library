@@ -60,7 +60,7 @@ describe(Book) do
       test.save()
       id = test.book_id()
       test.delete()
-      expect(Book.find(id)).to(eq([]))
+      expect(Book.find(id)).to(eq(nil))
     end
   end
 end

@@ -18,8 +18,8 @@ class Book
     result.each() do |book|
       title = book.fetch("title")
       author = book.fetch("author")
-      book_id = book.fetch("book_id")
-      patron_id = book.fetch("patron_id")
+      book_id = book.fetch("book_id").to_i()
+      patron_id = book.fetch("patron_id").to_i()
       check_out_date = book.fetch("check_out_date")
       due_date = book.fetch("due_date")
       books.push(Book.new({:title => title, :author => author, :book_id => book_id, :patron_id => patron_id, :check_out_date => check_out_date, :due_date => due_date}))
@@ -33,23 +33,26 @@ class Book
 
   define_method(:save) do
     result = DB.exec("INSERT INTO books (title, author) VALUES ('#{@title}', '#{@author}') RETURNING book_id;")
-    @book_id = result.first().fetch('book_id')
-    @book_id.to_i()
+    @book_id = result.first().fetch('book_id').to_i()
+    # binding.pry
+
   end
 
   define_singleton_method(:find) do |id|
+    found_book = nil
     Book.all().each() do |book|
       if book.book_id() == id
-        return book
+        found_book = book
       end
     end
+    found_book
   end
 
   define_method(:update) do |attributes|
     @title = attributes.fetch(:title, @title)
     @author = attributes.fetch(:author, @author)
     @id = self.book_id()
-    DB.exec("UPDATE books SET title = '#{@title}', author = '#{@author}' WHERE patron_id = #{@id};")
+    DB.exec("UPDATE books SET title = '#{@title}', author = '#{@author}' WHERE book_id = #{@id};")
   end
 
   define_method(:delete) do
