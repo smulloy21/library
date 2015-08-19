@@ -26,4 +26,22 @@ class Book
     end
     books
   end
+
+  define_method(:==) do |other|
+    self.book_id == other.book_id
+  end
+
+  define_method(:save) do
+    result = DB.exec("INSERT INTO books (title, author) VALUES ('#{@title}', '#{@author}') RETURNING book_id;")
+    @book_id = result.first().fetch('book_id')
+    @book_id.to_i()
+  end
+
+  define_singleton_method(:find) do |id|
+    Book.all().each() do |book|
+      if book.book_id() == id
+        return book
+      end
+    end
+  end
 end
