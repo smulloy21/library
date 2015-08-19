@@ -37,4 +37,13 @@ describe(Patron) do
       expect(Patron.find(test.patron_id())).to(eq(test))
     end
   end
+
+  describe('#update') do
+    it("updates a patrons name that matches the id") do
+      test = Patron.new({:patron_name => 'Susan'})
+      test.save()
+      test.update({:patron_name => 'susie'})
+      expect(test.patron_name()).to(eq('susie'))
+    end
+  end
 end
