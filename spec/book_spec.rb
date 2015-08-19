@@ -7,4 +7,12 @@ describe(Book) do
       expect(test.title()).to(eq('The Captains Daughter'))
     end
   end
+
+  describe('.all') do
+    it('return an empty array at first') do
+      expect(Book.all()).to(eq([]))
+    end
+  end
+
+  
 end
