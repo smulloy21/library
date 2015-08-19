@@ -1,0 +1,21 @@
+<h1>Books in the Library:</h1>
+
+<ul>
+  <% @books.each() do |book| %>
+    <li><%= book.title() %> By: <%= book.author %></li>
+    <% if book.patron_id != nil %>
+      <li><% book.due_date %></li>
+    <% end %>
+  <% end %>
+</ul>
+
+<h4>Add a book:</h4>
+<form action="/books/new" method="post">
+  <label for="title">Title:</label>
+  <input type="text" name="title" id="title">
+
+  <label for="author">Author:</label>
+  <input type="text" name="author" id="author">
+
+  <button type="submit">Add book</button>
+</form>
