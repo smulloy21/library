@@ -1,0 +1,12 @@
+<h1>Edit: <%= @patron.patron_name() %></h1>
+
+<form action="/patrons/<%= @patron.patron_id() %>" method="post">
+
+  <input type="hidden" name="_method" value="patch">
+
+  <label for="patron_name">Edit Name</label>
+  <input type="text" name="patron_name" id="patron_name">
+
+  <button type="submit">Update</button>
+
+</form>

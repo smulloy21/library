@@ -17,6 +17,11 @@ get('/books') do
   erb(:books)
 end
 
+get('/patrons') do
+    @patrons = Patron.all()
+    erb(:patrons)
+end
+
 post('/books/new') do
   title = params.fetch('title')
   author = params.fetch('author')
@@ -25,9 +30,21 @@ post('/books/new') do
   redirect('/books')
 end
 
+post('/patrons/new') do
+  name = params.fetch('patron_name')
+  @patron = Patron.new({:patron_name => name})
+  @patron.save()
+  redirect('/patrons')
+end
+
 get('/books/:id/edit') do
   @book = Book.find(params.fetch('id').to_i())
   erb(:book)
+end
+
+get('/patrons/:id/edit') do
+  @patron = Patron.find(params.fetch('id').to_i())
+  erb(:patron)
 end
 
 patch('/books/:id') do
@@ -36,4 +53,11 @@ patch('/books/:id') do
   @book = Book.find(params.fetch('id').to_i())
   @book.update({:title => title, :author => author})
   redirect('/books')
+end
+
+patch('/patrons/:id') do
+  patron = params.fetch('patron_name')
+  @patron = Patron.find(params.fetch('id').to_i())
+  @patron.update({:patron_name => patron})
+  redirect('/patrons')
 end

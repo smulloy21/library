@@ -11,7 +11,7 @@ class Patron
     patrons = []
     result.each() do |patron|
       name = patron.fetch("patron_name")
-      id = patron.fetch("patron_id")
+      id = patron.fetch("patron_id").to_i()
       patrons.push(Patron.new({:patron_name => name, :patron_id => id}))
     end
     patrons
@@ -23,8 +23,7 @@ class Patron
 
   define_method(:save) do
     result = DB.exec("INSERT INTO patrons (patron_name) VALUES ('#{@patron_name}') RETURNING patron_id;")
-    @patron_id = result.first().fetch('patron_id')
-    @patron_id.to_i()
+    @patron_id = result.first().fetch('patron_id').to_i()
   end
 
   define_singleton_method(:find) do |id|
