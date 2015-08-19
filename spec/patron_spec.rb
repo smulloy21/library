@@ -7,4 +7,10 @@ describe(Patron) do
       expect(test_patron.patron_name()).to(eq('Joe'))
     end
   end
+
+  describe('.all') do
+    it('will return and empty array') do
+      expect(Patron.all()).to(eq([]))
+    end
+  end
 end
