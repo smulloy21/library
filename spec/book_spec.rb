@@ -53,4 +53,14 @@ describe(Book) do
       expect(test.title()).to(eq('Captains Daughter'))
     end
   end
+
+  describe('#delete') do
+    it('deletes a book from a database') do
+      test = Book.new({:title => 'The Captains Daughter', :author => 'Alexander Pushkin'})
+      test.save()
+      id = test.book_id()
+      test.delete()
+      expect(Book.find(id)).to(eq([]))
+    end
+  end
 end
