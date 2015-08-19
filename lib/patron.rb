@@ -33,7 +33,7 @@ class Patron
          return patron
        end
      end
-   end
+  end
 
    define_method(:update) do |attributes|
      @patron_name = attributes.fetch(:patron_name)
@@ -41,4 +41,8 @@ class Patron
      DB.exec("UPDATE patrons SET patron_name = '#{@patron_name}' WHERE patron_id = #{@id};")
    end
 
+   define_method(:delete) do
+     @id = self.patron_id()
+     DB.exec("DELETE FROM patrons WHERE patron_id = #{@id};")
+   end
 end
