@@ -116,3 +116,10 @@ delete('/patrons/:id') do
   @patron.delete()
   redirect('/patrons')
 end
+
+# get('/books/find') do
+#   @books = Book.all()
+#   title = params.fetch('title')
+#   @books_array = Book.search_for_book(title)
+#   redirect('/books')
+# end

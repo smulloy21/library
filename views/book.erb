@@ -1,4 +1,4 @@
-<h1><%=@book.title()%>, By: <%= @book.author()%> </h1>
+<h1><%= @book.title()%>, By: <%= @book.author()%> </h1>
 
 <% if @book.available? %>
   <h3>This book is available! Check it out below.</h3>
@@ -14,12 +14,14 @@
     <button type="submit">Check out book!</button>
   </form>
 <% else %>
-  <h3>This book is currently checked out.</h3>
+  <h3>This book is currently checked out by <%= @book.who_has_book?().patron_name() %>.</h3>
 <% end %>
 
 <h3>Checkout History:</h3>
 <ul><%@book.return_list().each() do |array| %>
-  <li> <%= Patron.find(array[0]).patron_name() %>, Returned on: <%= Date.parse(array[1]).strftime('%B %e, %Y') %></li>
+  <% if array[1] != nil %>
+    <li> <%= Patron.find(array[0]).patron_name() %>, Returned on: <%= Date.parse(array[1]).strftime('%B %e, %Y') %></li>
+  <% end %>
   <%end%>
 </ul>
 
