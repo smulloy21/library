@@ -52,6 +52,30 @@ describe(Book) do
       expect(test.author()).to(eq('A.S. Pushkin'))
       expect(test.title()).to(eq('Captains Daughter'))
     end
+
+    it('lets you add a paton to a book') do
+      test_patron1 = Patron.new({:patron_name => 'Susan'})
+      test_patron1.save()
+      test_book1 = Book.new({:title => 'The Captains Daughter', :author => 'Alexander Pushkin'})
+      test_book1.save()
+      test_book1.update({:patron_ids => [test_patron1.patron_id()]})
+      expect(test_book1.patrons()).to(eq([test_patron1]))
+    end
+end
+
+  describe('#patrons') do
+    it('returns all patrons the book has') do
+      test_patron1 = Patron.new({:patron_name => 'Susan'})
+      test_patron1.save()
+      id1 = test_patron1.patron_id()
+      test_patron2 = Patron.new({:patron_name => 'Kendra'})
+      test_patron2.save()
+      id2 = test_patron2.patron_id()
+      test_book1 = Book.new({:title => 'The Captains Daughter', :author => 'Alexander Pushkin'})
+      test_book1.save()
+      test_book1.update({:patron_ids => [id1, id2]})
+      expect(test_book1.patrons()).to(eq([test_patron1, test_patron2]))
+    end
   end
 
   describe('#delete') do

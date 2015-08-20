@@ -54,8 +54,8 @@ class Patron
    define_method(:books) do
      patron_books = []
      results = DB.exec("SELECT book_id FROM books_patrons WHERE patron_id = #{self.patron_id()};")
+     
      results.each() do |result|
-
        book_id = result.fetch('book_id').to_i()
        book = DB.exec("SELECT * FROM books WHERE book_id = #{book_id};")
        title = book.first().fetch('title')
