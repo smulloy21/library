@@ -35,13 +35,34 @@ class Patron
   end
 
    define_method(:update) do |attributes|
-     @patron_name = attributes.fetch(:patron_name)
+     @patron_name = attributes.fetch(:patron_name, @patron_name)
      @id = self.patron_id()
      DB.exec("UPDATE patrons SET patron_name = '#{@patron_name}' WHERE patron_id = #{@id};")
-   end
+
+     attributes.fetch(:book_ids, []).each() do |book_id|
+       @check_out_date = Time.now()
+       @due_date = Time.now + (60*60*24*7*2)
+       DB.exec("INSERT INTO books_patrons(book_id, patron_id, check_out_date, due_date) VALUES (#{book_id}, #{self.patron_id()}, '#{@check_out_date}', '#{@due_date}');")
+    end
+  end
 
    define_method(:delete) do
      @id = self.patron_id()
      DB.exec("DELETE FROM patrons WHERE patron_id = #{@id};")
    end
+
+   define_method(:books) do
+     patron_books = []
+     results = DB.exec("SELECT book_id FROM books_patrons WHERE patron_id = #{self.patron_id()};")
+     results.each() do |result|
+
+       book_id = result.fetch('book_id').to_i()
+       book = DB.exec("SELECT * FROM books WHERE book_id = #{book_id};")
+       title = book.first().fetch('title')
+       author = book.first().fetch('author')
+       patron_books.push(Book.new({:title => title, :author => author, :book_id => book_id}))
+     end
+     patron_books
+  end
+
 end

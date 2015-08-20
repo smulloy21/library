@@ -45,7 +45,20 @@ describe(Patron) do
       test.update({:patron_name => 'susie'})
       expect(test.patron_name()).to(eq('susie'))
     end
+
+    it('lets you add a book to a patron') do
+      test_patron = Patron.new({:patron_name => 'Susan'})
+      test_book1 = Book.new({:title => 'The Captains Daughter', :author => 'Alexander Pushkin'})
+      test_book2 = Book.new({:title => 'The Daughter', :author => 'Joe'})
+      test_patron.save()
+      test_book1.save()
+      test_book2.save()
+      test_patron.update({:book_ids => [test_book1.book_id(), test_book2.book_id()]})
+      expect(test_patron.books()).to(eq([test_book1, test_book2]))
+    end
   end
+
+
 
   describe('#delete') do
     it('deletes a patron from a database') do

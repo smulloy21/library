@@ -3,9 +3,6 @@
 <ul>
   <% @books.each() do |book| %>
     <li><a href="/books/<%= book.book_id %>/edit"> <%= book.title() %> By: <%= book.author %> </a></li>
-    <% if book.patron_id != 0 %>
-      <li><% book.due_date %></li>
-    <% end %>
   <% end %>
 </ul>
 
