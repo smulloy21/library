@@ -14,9 +14,11 @@
 <% if @patron.books().any?() %>
   <h3>Here are a list of books you currently have checked out:</h3>
   <ul>
-    <% @patron.books().each() do |book| %>
-      <% if book.who_has_book?() == @patron %>
-        <li><a href="/books/<%= book.book_id %>/return"> <%= book.title() %> By: <%= book.author %></a></li>
+    <% @patron.due_list().each() do |book_array| %>
+      <% if Book.find(book_array[0]).who_has_book?() == @patron %>
+        <% if book_array[1] != nil %>
+        <li><a href="/books/<%= book_array[0] %>/return"> <%= Book.find(book_array[0]).title() %> By: <%= Book.find(book_array[0]).author %></a>, Due on: <%= Date.parse(book_array[1]).strftime('%B %e, %Y')%></li>
+        <% end %>
       <% end %>
     <% end %>
   </ul>

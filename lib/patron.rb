@@ -76,4 +76,12 @@ class Patron
      end
      books
    end
+
+   define_method(:due_list) do
+     books = []
+     checkout().each() do |book|
+       books.push([book.fetch(:book_id), book.fetch(:due_date)])
+     end
+     books
+   end
 end
