@@ -1,6 +1,6 @@
 <h1>Edit: <%= @book.title() %></h1>
 
-<form action="/books/<%= @book.book_id() %>" method="post">
+<form action="/books/<%= @book.book_id() %>/edit" method="post">
 
   <input type="hidden" name="_method" value="patch">
 

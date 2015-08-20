@@ -56,6 +56,16 @@ describe(Patron) do
       test_patron.update({:book_ids => [test_book1.book_id(), test_book2.book_id()]})
       expect(test_patron.books()).to(eq([test_book1, test_book2]))
     end
+
+    it('lets you update when a patron returns a book') do
+      test_patron = Patron.new({:patron_name => 'Susan'})
+      test_patron.save()
+      test_book1 = Book.new({:title => 'The Captains Daughter', :author => 'Alexander Pushkin'})
+      test_book1.save()
+      test_patron.update({:book_ids => [test_book1.book_id()]})
+      test_patron.update({:returned_book_ids => [test_book1.book_id()]})
+      expect(test_book1.available?()).to(eq(true))
+    end
   end
 
 

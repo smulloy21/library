@@ -6,7 +6,7 @@ require('./lib/patron')
 require('pg')
 require('pry')
 
-DB = PG.connect({:dbname => 'library_test'})
+DB = PG.connect({:dbname => 'library_test2'})
 
 get('/') do
   erb(:index)
@@ -52,7 +52,7 @@ get('/patrons/:id/edit') do
   erb(:patron_edit)
 end
 
-patch('/books/:id') do
+patch('/books/:id/edit') do
   @book = Book.find(params.fetch('id').to_i())
   if params.fetch('title').length > 0
     @book.update({:title => params.fetch('title')})
@@ -60,11 +60,11 @@ patch('/books/:id') do
   if params.fetch('author').length > 0
     @book.update({:author => params.fetch('author')})
   end
-  redirect('/books')
+  redirect('/books/' + @book.book_id().to_s())
 end
 
 get('/books/:id') do
-    @book = Book.find(params.fetch('id').to_i()) 
+    @book = Book.find(params.fetch('id').to_i())
     erb(:book)
 end
 

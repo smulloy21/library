@@ -4,7 +4,7 @@ require('patron')
 require('pg')
 require('pry')
 
-DB = PG.connect({:dbname => 'library_test'})
+DB = PG.connect({:dbname => 'library_test2'})
 
 RSpec.configure do |config|
   config.after(:each) do

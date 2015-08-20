@@ -81,4 +81,28 @@ class Book
     end
     returned_patrons
   end
+
+  define_method(:checkout) do
+    checkout = []
+    results = DB.exec("SELECT * FROM books_patrons WHERE book_id = #{self.book_id()};")
+    results.each() do |result|
+      patron_id = result.fetch('patron_id').to_i()
+      checked_out = result.fetch('check_out_date')
+      due_date = result.fetch('due_date')
+      returned = result.fetch('returned_date')
+      checkout.push({:book_id => self.book_id, :patron_id => patron_id, :checked_out_date => checked_out, :due_date => due_date, :returned_date => returned})
+    end
+    checkout
+  end
+
+  define_method(:available?) do
+    available = true
+    checkout().each() do |instance|
+      if instance.fetch(:book_id) == self.book_id && instance.fetch(:returned_date) == nil
+        available = false
+      end
+    end
+    available
+  end
+
 end
