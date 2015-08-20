@@ -14,13 +14,13 @@
   <button type="submit">Find</button>
 </form>
 
-<% if @books_array != nil %>
+<!-- <% if @books_array != nil %>
   <ul>
     <% @books_array.each() do |book| %>
       <li><%= book.title %> By: <% book.author %></li>
     <% end %>
   </ul>
-<% end %>
+<% end %> -->
 
 <h4>Add a book:</h4>
 <form action="/books/new" method="post">
