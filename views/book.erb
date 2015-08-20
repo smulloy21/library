@@ -1,0 +1,8 @@
+<h1><%=@book.title()%>, By: <%= @book.author()%> </h1>
+
+<ul><%@book.patrons().each() do |patron| %>
+  <li> <%= patron.patron_name()%></li>
+  <%end%>
+</ul>
+
+<a href="/books/<%=@book.book_id()%>/edit">Update Book Info</a>

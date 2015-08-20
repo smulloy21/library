@@ -63,6 +63,11 @@ patch('/books/:id') do
   redirect('/books')
 end
 
+get('/books/:id') do
+    @book = Book.find(params.fetch('id').to_i()) 
+    erb(:book)
+end
+
 delete('/books/:id') do
   @book = Book.find(params.fetch('id').to_i())
   @book.delete()

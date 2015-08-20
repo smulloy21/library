@@ -2,7 +2,7 @@
 
 <ul>
   <% @books.each() do |book| %>
-    <li><a href="/books/<%= book.book_id %>/edit"> <%= book.title() %> By: <%= book.author %> </a></li>
+    <li><a href="/books/<%= book.book_id %>"> <%= book.title() %> By: <%= book.author %> </a></li>
   <% end %>
 </ul>
 
@@ -16,3 +16,5 @@
 
   <button type="submit">Add book</button>
 </form>
+
+<a href="/">Home</a>
