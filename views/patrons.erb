@@ -2,7 +2,7 @@
 
 <ul>
   <% @patrons.each() do |patron| %>
-  <li><a href="/patrons/<%= patron.patron_id() %>/edit"> <%= patron.patron_name() %></a></li>
+  <li><a href="/patrons/<%= patron.patron_id() %>"> <%= patron.patron_name() %></a></li>
   <% end %>
 </ul>
 

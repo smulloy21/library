@@ -1,22 +1,28 @@
-<h1>Edit: <%= @patron.patron_name() %></h1>
+<h1><%= @patron.patron_name() %></h1>
 
+<h3>Check out a book:</h3>
 <form action="/patrons/<%= @patron.patron_id() %>" method="post">
 
   <input type="hidden" name="_method" value="patch">
 
-  <label for="patron_name">Edit Name</label>
-  <input type="text" name="patron_name" id="patron_name">
+  <label for="title">Title:</label>
+  <input type="text" name="title" id="title">
 
-  <button type="submit">Update</button>
-
+  <button type="submit">Check out book!</button>
 </form>
 
-<h3>Delete Patron</h3>
+<% if @patron.books().any?() %>
+  <h3>Here are a list of books you have checked out:</h3>
+  <ul>
+    <% @patron.books().each() do |book| %>
+      <li><%= book.title() %> By: <%= book.author %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <h3>You have no books checked out.</h3>
+<% end %>
 
-<form action="/patrons/<%= @patron.patron_id() %>" method="post">
-  <input type="hidden" name="_method" value="delete">
-  <button type="submit">Delete</button>
-</form>
 
-<a href="/patrons">Back to list of patrons</a><br>
+<a href="/patrons/<%= @patron.patron_id %>/edit">Update Patron Info</a><br>
+<a href="/patrons">Back to List of Patrons</a><br>
 <a href="/">Home</a>

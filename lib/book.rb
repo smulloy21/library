@@ -41,6 +41,16 @@ class Book
     found_book
   end
 
+  define_singleton_method(:find_by_title) do |title_to_find|
+    found_book = nil
+    Book.all().each() do |book|
+      if book.title() == title_to_find
+        found_book = book
+      end
+    end
+    found_book
+  end
+
   define_method(:update) do |attributes|
     @title = attributes.fetch(:title, @title)
     @author = attributes.fetch(:author, @author)
