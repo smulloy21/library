@@ -15,7 +15,7 @@
   <h3>Here are a list of books you have checked out:</h3>
   <ul>
     <% @patron.books().each() do |book| %>
-      <li><%= book.fetch('book').title() %> By: <%= book.fetch('book').author %></li>
+      <li><%= book.title() %> By: <%= book.author %></li>
     <% end %>
   </ul>
 <% else %>

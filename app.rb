@@ -65,7 +65,15 @@ end
 
 get('/books/:id') do
     @book = Book.find(params.fetch('id').to_i())
+    @patrons = Patron.all()
     erb(:book)
+end
+
+patch('/books/:id') do
+  @book = Book.find(params.fetch('id').to_i())
+  @patron = Patron.find(params.fetch('patron_id').to_i())
+  @patron.update({:book_ids => [@book.book_id()]})
+  redirect('/books/' + @book.book_id().to_s())
 end
 
 delete('/books/:id') do

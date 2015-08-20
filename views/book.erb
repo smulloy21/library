@@ -5,4 +5,21 @@
   <%end%>
 </ul>
 
+<% if @book.available? %>
+  <h3>This book is available! Check it out below.</h3>
+  <form action ="/books/<%=@book.book_id()%>" method="post">
+    <input type="hidden" name="_method" value="patch">
+
+    <label for="patron_id">Choose your name from the list:</label>
+    <select id='patron_id' name='patron_id' type='text'>
+      <% @patrons.each() do |patron| %>
+      <option value="<%= patron.patron_id()%>"> <%= patron.patron_name() %> </option>
+      <% end %>
+    </select>
+    <button type="submit">Check out book!</button>
+  </form>
+<% else %>
+  <h3>This book is currently checked out.</h3>
+<% end %>
+
 <a href="/books/<%=@book.book_id()%>/edit">Update Book Info</a>
