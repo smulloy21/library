@@ -1,10 +1,5 @@
 <h1><%=@book.title()%>, By: <%= @book.author()%> </h1>
 
-<ul><%@book.patrons().each() do |patron| %>
-  <li> <%= patron.patron_name()%></li>
-  <%end%>
-</ul>
-
 <% if @book.available? %>
   <h3>This book is available! Check it out below.</h3>
   <form action ="/books/<%=@book.book_id()%>" method="post">
@@ -22,4 +17,14 @@
   <h3>This book is currently checked out.</h3>
 <% end %>
 
+<h3>Checkout History:</h3>
+<ul><%@book.return_list().each() do |array| %>
+  <li> <%= Patron.find(array[0]).patron_name() %>, Returned on: <%= Date.parse(array[1]).strftime('%B %e, %Y') %></li>
+  <%end%>
+</ul>
+
 <a href="/books/<%=@book.book_id()%>/edit">Update Book Info</a>
+<br>
+<a href="/">Home</a>
+<br>
+<a href="/books">Book List</a>

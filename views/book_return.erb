@@ -1,0 +1,8 @@
+<h1>Book Return </h1>
+<h2><%=@book.who_has_book?().patron_name()%> would you like to return <%= @book.title() %>?</h2>
+
+<form action="/books/<%=@book.book_id()%>/return" method="post">
+  <input type="hidden" name="patron_id" value="<%=@book.who_has_book?().patron_id()%>">
+  <input type="hidden" name="_method" value="patch">
+  <button type="submit">Return Book</button>
+</form>

@@ -69,6 +69,19 @@ get('/books/:id') do
     erb(:book)
 end
 
+get('/books/:id/return') do
+  @book = Book.find(params.fetch('id').to_i())
+  erb(:book_return)
+end
+
+patch('/books/:id/return') do
+  patron_id = params.fetch('patron_id').to_i()
+  book_id = params.fetch('id').to_i()
+  @patron = Patron.find(patron_id)
+  @patron.update({:returned_book_ids => [book_id]})
+  redirect('/patrons/' + @patron.patron_id().to_s())
+end
+
 patch('/books/:id') do
   @book = Book.find(params.fetch('id').to_i())
   @patron = Patron.find(params.fetch('patron_id').to_i())
@@ -88,6 +101,7 @@ patch('/patrons/:id/edit') do
   @patron.update({:patron_name => patron})
   redirect('/patrons/' + @patron.patron_id().to_s())
 end
+
 
 patch('/patrons/:id') do
   @patron = Patron.find(params.fetch('id').to_i())

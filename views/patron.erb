@@ -12,10 +12,12 @@
 </form>
 
 <% if @patron.books().any?() %>
-  <h3>Here are a list of books you have checked out:</h3>
+  <h3>Here are a list of books you currently have checked out:</h3>
   <ul>
     <% @patron.books().each() do |book| %>
-      <li><%= book.title() %> By: <%= book.author %></li>
+      <% if book.who_has_book?() == @patron %>
+        <li><a href="/books/<%= book.book_id %>/return"> <%= book.title() %> By: <%= book.author %></a></li>
+      <% end %>
     <% end %>
   </ul>
 <% else %>

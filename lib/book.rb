@@ -105,4 +105,21 @@ class Book
     available
   end
 
+  define_method(:who_has_book?) do
+    patron = nil
+    checkout().each() do |instance|
+      if instance.fetch(:book_id) == self.book_id && instance.fetch(:returned_date) == nil
+        patron = Patron.find(instance.fetch(:patron_id))
+      end
+    end
+    patron
+  end
+
+  define_method(:return_list) do
+    return_list = []
+    checkout().each() do |instance|
+      return_list.push([instance.fetch(:patron_id), instance.fetch(:returned_date)])
+    end
+    return_list  
+  end
 end
