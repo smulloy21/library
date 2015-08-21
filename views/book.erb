@@ -11,7 +11,7 @@
       <option value="<%= patron.patron_id()%>"> <%= patron.patron_name() %> </option>
       <% end %>
     </select>
-    <button type="submit">Check out book!</button>
+    <button type="submit" class="btn btn-primary btn-sm">Check out book!</button>
   </form>
 <% else %>
   <h3>This book is currently checked out by <%= @book.who_has_book?().patron_name() %>.</h3>
