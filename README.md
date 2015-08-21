@@ -10,4 +10,16 @@
 
 
 Test Database
-  library_test2 
+  library_test2
+
+
+  <h3>Check out a book:</h3>
+  <form action="/patrons/<%= @patron.patron_id() %>" method="post">
+
+    <input type="hidden" name="_method" value="patch">
+
+    <label for="title">Title:</label>
+    <input type="text" name="title" id="title">
+
+    <button type="submit">Check out book!</button>
+  </form>

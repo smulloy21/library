@@ -1,32 +1,18 @@
 <h1><%= @patron.patron_name() %></h1>
 
-<h3>Check out a book:</h3>
-<form action="/patrons/<%= @patron.patron_id() %>" method="post">
-
-  <input type="hidden" name="_method" value="patch">
-
-  <label for="title">Title:</label>
-  <input type="text" name="title" id="title">
-
-  <button type="submit">Check out book!</button>
-</form>
-
-<% if @patron.books().any?() %>
-  <h3>Here are a list of books you currently have checked out:</h3>
-  <ul>
-    <% @patron.due_list().each() do |book_array| %>
-      <% if Book.find(book_array[0]).who_has_book?() == @patron %>
-        <% if book_array[1] != nil %>
+<% @patron.due_list().each() do |book_array| %>
+  <% if Book.find(book_array[0]).who_has_book?() == @patron && book_array[1] != nil %>
+      <h3>Here are a list of books you currently have checked out:</h3>
+      <ul>
         <li><a href="/books/<%= book_array[0] %>/return"> <%= Book.find(book_array[0]).title() %> By: <%= Book.find(book_array[0]).author %></a>, Due on: <%= Date.parse(book_array[1]).strftime('%B %e, %Y')%></li>
-        <% end %>
-      <% end %>
-    <% end %>
-  </ul>
-<% else %>
-  <h3>You have no books checked out.</h3>
+      </ul>
+  <% else %>
+    <h3>You currently have no books checked out.</h3>
+  <% end %>
 <% end %>
 
 
+<a href="/books">See List of Books</a><br>
 <a href="/patrons/<%= @patron.patron_id %>/edit">Update Patron Info</a><br>
 <a href="/patrons">Back to List of Patrons</a><br>
 <a href="/">Home</a>
