@@ -79,8 +79,10 @@ class Patron
 
    define_method(:due_list) do
      books = []
-     checkout().each() do |book|
-       books.push([book.fetch(:book_id), book.fetch(:due_date)])
+     checkout().each() do |instance|
+       if instance.fetch(:due_date) != nil
+         books.push([instance.fetch(:book_id), instance.fetch(:due_date)])
+       end
      end
      books
    end

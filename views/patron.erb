@@ -1,14 +1,14 @@
 <h1><%= @patron.patron_name() %></h1>
 
-<% @patron.due_list().each() do |book_array| %>
-  <% if Book.find(book_array[0]).who_has_book?() == @patron && book_array[1] != nil %>
-      <h3>Here are a list of books you currently have checked out:</h3>
-      <ul>
-        <li><a href="/books/<%= book_array[0] %>/return"> <%= Book.find(book_array[0]).title() %> By: <%= Book.find(book_array[0]).author %></a>, Due on: <%= Date.parse(book_array[1]).strftime('%B %e, %Y')%></li>
-      </ul>
-  <% else %>
-    <h3>You currently have no books checked out.</h3>
+<% if @patron.due_list().any? %>
+  <h3>Books you currently have checked out:</h3>
+  <% @patron.due_list().each() do |book_array| %>
+    <ul>
+      <li><a href="/books/<%= book_array[0] %>/return"> <%= Book.find(book_array[0]).title() %> By <%= Book.find(book_array[0]).author %></a>, Due on: <%= Date.parse(book_array[1]).strftime('%B %e, %Y')%></li>
+    </ul>
   <% end %>
+<% else %>
+  <h3>You currently have no books checked out.</h3>
 <% end %>
 
 
